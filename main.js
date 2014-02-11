@@ -500,12 +500,16 @@ var userInfo = [
   new google.maps.LatLng(37.752986, -122.403112),
   new google.maps.LatLng(37.751266, -122.403355)
 ];
-
+var userArray = [];
 function initialize() {
   var mapOptions = {
     center: new google.maps.LatLng(37.77, -122.42),
-    zoom: 11
+    zoom: 13,
+    disableDefaultUI: true,
+    zoomControl: true,
+    styles:  [ { featureType: "poi", elementType: "labels", stylers: [ { visibility: "off" } ] } ]
   };
+ 
   var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
   var addCircle = function(e) {
@@ -520,37 +524,30 @@ function initialize() {
       strokeColor: '#FFF',
       strokeOpacity: 0
     })
+  userArray.push(e.latLng);
   };
 
 //Slider init with current hour to 4 hours from now
   $("#slider-el").rangeSlider({
     bounds: {
-      min: moment().hours()+(moment().minutes()/60),
-      max: Math.round(moment().hours()+(moment().minutes()/60)+4)
+      min: 0,
+      max: 240
     },
     arrows: true,
     defaultValues: {
-      min: Math.round(moment().hours()+(moment().minutes()/60)+1),
-      max: Math.round(moment().hours()+moment().minutes()/60)+2
+      min: 30,
+      max: 75
     },
     range: {
-      min: .75},
-    step: .25,
+      min: 45},
+    step: 15,
 //This adjusts the display of the tooltip values
     formatter: function(val) {
-     var hours = parseInt(val);
-     var mins = Math.round((val-hours) *60);
-     if (hours > 12 && mins > 0) {
-      return hours - 12+":"+mins;
-     }
-     else if (hours<12 && mins >0) {
-      return hours+":"+mins;
-     }
-     else if (hours<12 && mins ===0) {
-      return hours+":"+mins+0
+     if (val===0) {
+      return moment().format("h:mma");
      }
      else {
-      return hours - 12+":"+mins+0
+      return moment().add('minutes', val).format("h:mma")
      }
     }
   });

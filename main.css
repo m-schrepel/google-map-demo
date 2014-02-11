@@ -9,7 +9,9 @@ html {
 #map-canvas {
 	height: 80vh;
 	width: 100%;
-	/*margin: 1em;*/
+}
+#map-canvas img {
+	max-width: none;
 }
 #slider-el {
 	width: 100%;
