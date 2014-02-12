@@ -1,14 +1,14 @@
-/*body {
-	height: 100%;
-	width: 100%;
+body {
+	background-color: #C4C2C2;
 }
 html {
 	height: 100%;
 	width: 100%;
-}*/
+}
 #map-canvas {
 	height: 80vh;
 	width: 100%;
+	border: 2px solid slategray;
 }
 #map-canvas img {
 	max-width: none;
