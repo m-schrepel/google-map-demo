@@ -1,6 +1,7 @@
 var currentCircles = [];
 var drawArray = [];
 var truckArray = [];
+var notifyArray = [];
 // Person class with relevant marker data and unique, possibly hilarious name
 var people = [];
 var Person = function (where, startTime, endTime, randName) {
@@ -12,6 +13,10 @@ var Person = function (where, startTime, endTime, randName) {
 var Foodtruck = function (where, truckName) {
   this.truckName = truckName;
   this.where = where;
+}
+var Notify = function (randName, truckName) {
+  this.randName = randName;
+  this.truckName = truckName;
 }
 // Function that gets the start time and end time and returns a properly formatted time stamp
 start = function () {
@@ -72,19 +77,32 @@ function initialize() {
       var trucks = new Foodtruck (myLatlng, chance.last());
       truckArray.push(trucks)
     };
+// This function compares foodtruck to users and notifies if < 1000 meters and messes with notify
     var truckDistanceCheck = function() {      
       for (var i = 0; i < people.length; i++) {
         var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(truckArray[0].where, people[i].where);
         console.log(distanceBetween);
         if (distanceBetween < 1000) {
-          alert(people[i].randName + " The " +truckArray[0].truckName+ " food truck is near you!");
+          var notifyLoop = new Notify (people[i].randName, truckArray[0].truckName);
+          notifyArray.push(notifyLoop);
         }
         else {
           console.log("sorry");
         }
       }
+    $('title').text(notifyArray.length + " new");
+    $("#notify-label").text(notifyArray.length);
+    $("#notify-label").addClass('active');
+
     truckArray.splice(0,1);
     };
+// Reset the notify field and pop up a div with the notify information
+    var notifyReset = function () {
+      $('#notify-label').removeClass("active");
+      $('#notify-label').text(0);
+      $('title').text("Google Maps Demo");
+      notifyArray = [];
+    }
   //Slider init with current hour to 4 hours from now
     $("#slider-el").rangeSlider({
       bounds: {
@@ -110,7 +128,7 @@ function initialize() {
       }
     });
 // event listeners
-  
+  $("#notify-label").click(notifyReset);
   google.maps.event.addDomListener(map, 'rightclick', addTruck);
   google.maps.event.addDomListener(map, 'rightclick', truckDistanceCheck);
   google.maps.event.addDomListener(map, 'click', addPerson);
