@@ -1,0 +1,59 @@
+body {
+	background-color: #C4C2C2;
+}
+html {
+	height: 100%;
+	width: 100%;
+}
+#map-canvas {
+	height: 70vh;
+	width: 100%;
+	border: 2px solid slategray;
+}
+#map-canvas img {
+	max-width: none;
+}
+#slider-el {
+	width: 100%;
+
+}	
+.units-row {
+	padding: 20px;
+}
+.nav-g {
+	background-color: slategray;
+}
+#site-name-nav {
+	color: white;
+	font-size: 3em;
+	line-height: 2em;
+}
+#notify-right {
+	float: right;
+	font-size: 1.2em;
+	padding-top: 20px;
+
+}
+#notify-label {
+	text-align: center;
+	font-size: 1em;
+	transition: background-color 1s ease-out;
+}
+#notify-label.active {
+	background-color: red;
+	-webkit-animation: pulse 3s;
+}
+@-webkit-keyframes pulse {
+	0% {
+		background-color: white;
+	}
+	25% {
+		background-color: red;
+	}
+	50% {
+		background-color: white;
+	}
+	100% {
+		background-color: red;
+	}
+}
